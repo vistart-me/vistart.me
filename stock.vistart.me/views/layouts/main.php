@@ -4,7 +4,7 @@
 /* @var $content string */
 
 use common\widgets\Alert;
-use ebook_vistart_me\assets\AppAsset;
+use stock_vistart_me\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
