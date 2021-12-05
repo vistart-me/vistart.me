@@ -1,5 +1,6 @@
 <?php
 $db = require __DIR__ . '/db.php';
+$authManager = require __DIR__ . '/authManager.php';
 $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -10,7 +11,8 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'db' => $db
+        'db' => $db,
+        'authManager' => $authManager,
     ],
 ];
 
