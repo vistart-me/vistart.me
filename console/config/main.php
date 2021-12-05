@@ -21,6 +21,10 @@ return [
             'class' => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
         ],
+        'user' => [
+            'class' => 'rhosocial\user\console\controllers\UserController',
+            'userClass' => 'common\models\User'
+        ],
     ],
     'components' => [
         'log' => [
