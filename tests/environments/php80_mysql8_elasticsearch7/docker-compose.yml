@@ -1,0 +1,101 @@
+version: "3"
+services:
+  php:
+    build:
+      context: .
+      args:
+        TAG: 8.0-apache
+    image: registry.cn-shanghai.aliyuncs.com/vistart_public/php:8.0-apache-dev
+    working_dir: /var/www/vistart-me
+    networks:
+      - dev
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - mysql
+      - es01
+      - es02
+      - es03
+    volumes:
+      - vistart_me_composer_data:/root/.composer/cache
+      - ../../../../vistart.me:/var/www/vistart.me
+  mysql:
+    image: mysql:8
+    networks:
+      - dev
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vistart.me
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - vistart_me_mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es01_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - dev
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es02_data:/usr/share/elasticsearch/data
+    networks:
+      - dev
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es03_data:/usr/share/elasticsearch/data
+    networks:
+      - dev
+networks:
+  dev:
+volumes:
+  vistart_me_composer_data:
+  es01_data:
+  es02_data:
+  es03_data:
+  vistart_me_mysql_data:
