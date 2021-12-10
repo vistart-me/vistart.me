@@ -20,6 +20,7 @@ services:
     volumes:
       - vistart_me_composer_data:/root/.composer/cache
       - ../../../../vistart.me:/var/www/vistart.me
+      - ../../../../vistart.me/vistart.me/config/vistart.me.conf:/etc/apache2/sites-enabled/vistart.me.conf:ro
   mysql:
     image: mysql:8
     networks:
