@@ -32,6 +32,10 @@
     "psr-4":{
       "ebook_vistart_me\\": "ebook.vistart.me",
       "home_vistart_me\\": "home.vistart.me",
+      "re_vistart_me\\": "re.vistart.me",
+      "reg_vistart_me\\": "reg.vistart.me",
+      "sso_vistart_me\\": "sso.vistart.me",
+      "static_vistart_me\\": "static.vistart.me",
       "stock_vistart_me\\": "stock.vistart.me",
       "_vistart_me\\": "vistart.me"
     }
