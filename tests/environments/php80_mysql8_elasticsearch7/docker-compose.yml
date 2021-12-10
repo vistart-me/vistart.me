@@ -6,7 +6,7 @@ services:
       args:
         TAG: 8.0-apache
     image: registry.cn-shanghai.aliyuncs.com/vistart_public/php:8.0-apache-dev
-    working_dir: /var/www/vistart-me
+    working_dir: /var/www/vistart.me
     networks:
       - dev
     ports:
